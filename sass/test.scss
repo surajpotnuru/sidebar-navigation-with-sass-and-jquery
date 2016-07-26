@@ -33,6 +33,12 @@ body {
       z-index:99999;
       background: rgba(0,0,0,0.8);
       display: none;
+
+      -webkit-transition: display 0.2s linear;
+      -moz-transition: display 0.2s linear;
+      -ms-transition: display 0.2s linear;
+      -o-transition: display 0.2s linear;
+      transition: display 0.2s linear;
     }
   }
   .sidebar {

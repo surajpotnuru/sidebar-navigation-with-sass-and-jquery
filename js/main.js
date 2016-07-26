@@ -1,4 +1,22 @@
 $(document).ready(function () {
+
+    var mode = "push";
+    // var mode = "overlay";
+    //Available modes :  push & overlay
+
+    var hoverScreenFlag = true;
+    // var hoverScreenFlag = false;
+    //Change it to false to remove black overlay on screen while sidebar is open
+    
+    function setMode(m){
+        mode = m;
+    }
+    function setHSFlag(hs){
+        hoverScreenFlag = hs;
+    }
+
+    var sidebarWidth = "200px";
+
     var main = $('.main');
     var sidebar = $('.sidebar');
     var hoverScreen = $('.hover-screen');
@@ -11,20 +29,37 @@ $(document).ready(function () {
     });
 
     $("#toggleButton").click(function (e) {
-        if (main.hasClass('open')) {
-            main.removeClass('open')
-            sidebar.removeClass('open')
-            hoverScreen.hide();
+        if (sidebar.hasClass('open')) {
+            if(mode == "push"){
+                main.removeClass('open');
+            }
+            sidebar.removeClass('open');
+            if(hoverScreenFlag){
+                hoverScreen.hide();
+            }
 
         } else {
-            main.addClass('open');
+            if(mode == "push"){
+                main.addClass('open');
+            }
             sidebar.addClass('open');
-            hoverScreen.show();
+            if(hoverScreenFlag){
+                hoverScreen.show();
+            }
         }
     });
 
-    hoverScreen.click(function(e){
-        e.stopPropagation();
-        $("#toggleButton").trigger("click");
-    });
+    if (hoverScreenFlag && mode == "push") {
+        hoverScreen.click(function (e) {
+            e.stopPropagation();
+            $("#toggleButton").trigger("click");
+        });
+    }
+    if(hoverScreenFlag && mode == "overlay"){
+        hoverScreen.css("left",sidebarWidth);
+        hoverScreen.click(function (e) {
+            e.stopPropagation();
+            $("#toggleButton").trigger("click");
+        });
+    }
 });
